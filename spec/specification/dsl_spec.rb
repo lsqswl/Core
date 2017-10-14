@@ -19,6 +19,16 @@ module Pod
         @spec.attributes_hash['version'].should == '1.0'
       end
 
+      it 'allows specifying the swift version' do
+        @spec.swift_version = '>= 3.0'
+        @spec.attributes_hash['swift_versions'].should == '>= 3.0'
+      end
+
+      it 'allows specifying a range of swift versions' do
+        @spec.swift_versions = '>= 3.0', '< 4.0'
+        @spec.attributes_hash['swift_versions'].should == ['>= 3.0', '< 4.0']
+      end
+
       it 'allows specifying the cocoapods version' do
         @spec.cocoapods_version = '>= 0.36'
         @spec.attributes_hash['cocoapods_version'].should == '>= 0.36'
@@ -475,7 +485,7 @@ module Pod
         singularized.map { |attr| attr.name.to_s }.sort.should == %w(
           authors compiler_flags default_subspecs frameworks libraries
           preserve_paths resource_bundles resources screenshots script_phases
-          vendored_frameworks vendored_libraries weak_frameworks
+          swift_versions vendored_frameworks vendored_libraries weak_frameworks
         )
       end
     end

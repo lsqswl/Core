@@ -40,6 +40,15 @@ module Pod
           end
         end
 
+        # @return [Array<Requirement>] The swift_versions required to use the
+        #                              specification.
+        #
+        def swift_versions
+          @swift_versions ||= if versions = attributes_hash['swift_versions']
+                                Requirement.new(versions)
+                              end
+        end
+
         # @return [Requirement] The CocoaPods version required to use the specification.
         #
         def cocoapods_version
